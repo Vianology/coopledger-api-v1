@@ -1,0 +1,58 @@
+{
+  "name": "coopledger-api",
+  "version": "1.0.0",
+  "description": "API pour la plateforme CoopLedger – gestion de coopératives agricoles avec blockchain",
+  "type": "module",
+  "main": "dist/server.mjs",
+  "scripts": {
+    "build": "prisma generate && tsc -b",
+    "start": "prisma migrate deploy && node dist/server.mjs",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@better-auth/expo": "^1.6.9",
+    "@better-auth/infra": "^0.2.8",
+    "@prisma/client": "^5.22.0",
+    "better-auth": "^1.6.9",
+    "bullmq": "^5.76.5",
+    "cloudinary": "^2.10.0",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "ethers": "^6.16.0",
+    "express": "^5.2.1",
+    "fedapay": "^1.2.5",
+    "ioredis": "^5.10.1",
+    "morgan": "^1.10.1",
+    "multer": "^2.1.1",
+    "pinata": "^2.5.6",
+    "socket.io": "^4.8.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.14",
+    "@types/compression": "^1.8.1",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^25.6.0",
+    "esbuild": "^0.28.0",
+    "nodemon": "^3.1.14",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^6.0.3"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": ["cooperative", "blockchain", "express", "api", "agriculture"],
+  "author": "Equipe TG-28",
+  "license": "MIT"
+}
