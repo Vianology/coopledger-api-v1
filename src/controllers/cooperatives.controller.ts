@@ -1,8 +1,8 @@
 import { MembershipGrade, MembershipRole, MembershipStatus } from "@prisma/client";
 import type { Request, Response } from "express";
-import { cloudinary, pinata } from "@/utils/storage";
-import { encrypt, generateCoopKey, encryptWithKey } from "@/services/crypto.service";
-import { prisma } from "@/utils/prisma";
+import { cloudinary, pinata } from "@/utils/storage.js";
+import { encrypt, generateCoopKey, encryptWithKey } from "@/services/crypto.service.js";
+import { prisma } from "@/utils/prisma.js";
 
 class HttpError extends Error {
   constructor(public statusCode: number, message: string) {

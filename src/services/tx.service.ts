@@ -1,6 +1,6 @@
-import { prisma } from "@/utils/prisma";
-import { blockchainQueue } from "@/utils/queue";
-import { TransactionStatus, TransactionType } from "@prisma/client";
+import { prisma } from "@/utils/prisma.js";
+import { blockchainQueue } from "@/utils/queue.js";
+import { TransactionType, TransactionStatus } from "@prisma/client";
 
 export async function initiateDeposit(
   userId: string,
@@ -18,9 +18,6 @@ export async function initiateDeposit(
       cooperativeId,
     },
   });
-
-  // Ajouter à la file d'attente BullMQ pour traitement blockchain
   await blockchainQueue.add("process-deposit", { txId: transaction.id });
-
   return transaction;
 }

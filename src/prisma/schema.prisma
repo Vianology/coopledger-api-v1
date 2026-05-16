@@ -7,37 +7,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                 String        @id @default(cuid())
-  email              String        @unique
-  emailVerified      Boolean       @default(false)
-  name               String
-  phoneNumber        String        @unique
-  role               String        @default("MEMBER") // MEMBER, ADMIN
-  publicKey          String?       // adresse blockchain
-  encryptedPrivateKey String?      // clé privée chiffrée
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
+// ========================
+// Modèles principaux
+// ========================
 
+model User {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  emailVerified      Boolean   @default(false)
+  name               String
+  phoneNumber        String    @unique
+  role               String    @default("MEMBER") // MEMBER, ADMIN
+  publicKey          String?   // adresse blockchain
+  encryptedPrivateKey String?  // clé privée chiffrée
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  // Relations
   memberships        Membership[]
   transactions       Transaction[]
   voteCasts          VoteCast[]
   createdCooperatives Cooperative[] @relation("Creator")
   proposedVotes      Vote[]         @relation("Proposer")
+
+  // Better Auth
   accounts           Account[]
   sessions           Session[]
 }
-
 
 model Cooperative {
   id          String   @id @default(cuid())
   name        String
   description String
   logo        String?
-  founders    Json     // liste des noms fondateurs
+  founders    Json     // liste des noms fondateurs (string[])
   latitude    Float?
   longitude   Float?
-  encryptionKey String // clé AES de la coop, chiffrée avec clé maître
+  encryptionKey String  // clé AES de la coop, chiffrée avec clé maître
   status      String   @default("ACTIVE") // ACTIVE, SUSPENDED
   fedapayApiKeyPublic String?
   fedapayApiKeySecret String? // chiffrée
@@ -128,7 +134,7 @@ model Vote {
   id          String      @id @default(cuid())
   subject     String
   description String?
-  proposals   Json        // tableau de propositions (texte)
+  proposals   Json        // tableau de propositions (string[])
   endDate     DateTime
   type        VoteType
   status      VoteStatus  @default(OPEN)
@@ -177,7 +183,10 @@ model VoteCast {
   @@unique([voteId, userId])
 }
 
-// Tables Better Auth (gérées automatiquement, mais déclarées pour Prisma)
+// ========================
+// Tables Better Auth (obligatoires)
+// ========================
+
 model Account {
   id                String  @id @default(cuid())
   userId            String

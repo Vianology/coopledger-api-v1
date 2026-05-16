@@ -1,10 +1,9 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
-import { env } from "@/config/env";
+import { env } from "@/config/env.js";
 
-const ALGORITHM = env.ALGORITHM; // "aes-256-gcm" recommandé
+const ALGORITHM = env.ALGORITHM; // "aes-256-gcm"
 const ENCRYPTION_KEY = Buffer.from(env.ENCRYPTION_KEY, "hex");
 
-// Chiffrement simple avec iv (pour les clés privées)
 export function encrypt(text: string): string {
   const iv = randomBytes(16);
   const cipher = createCipheriv(ALGORITHM, ENCRYPTION_KEY, iv);
@@ -22,7 +21,6 @@ export function decrypt(text: string): string {
   return decrypted.toString("utf8");
 }
 
-// Chiffrement avec une clé spécifique (AES-256-GCM)
 export function encryptWithKey(data: Buffer | string, hexKey: string) {
   const iv = randomBytes(16);
   const key = Buffer.from(hexKey, "hex");
@@ -30,11 +28,7 @@ export function encryptWithKey(data: Buffer | string, hexKey: string) {
   const buffer = Buffer.isBuffer(data) ? data : Buffer.from(data);
   const encrypted = Buffer.concat([cipher.update(buffer), cipher.final()]);
   const tag = cipher.getAuthTag();
-  return {
-    encryptedData: encrypted,
-    iv: iv.toString("hex"),
-    tag: tag.toString("hex"),
-  };
+  return { encryptedData: encrypted, iv: iv.toString("hex"), tag: tag.toString("hex") };
 }
 
 export function decryptWithKey(encryptedData: Buffer, hexKey: string, ivHex: string, tagHex: string) {
@@ -48,4 +42,12 @@ export function decryptWithKey(encryptedData: Buffer, hexKey: string, ivHex: str
 
 export function generateCoopKey(): string {
   return randomBytes(32).toString("hex");
+}
+
+export function encryptFile(file: Express.Multer.File) {
+  return encryptWithKey(file.buffer, ENCRYPTION_KEY.toString("hex"));
+}
+
+export function decryptFile(encryptedData: Buffer, ivHex: string, tagHex: string) {
+  return decryptWithKey(encryptedData, ENCRYPTION_KEY.toString("hex"), ivHex, tagHex);
 }

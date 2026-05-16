@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "API pour la plateforme CoopLedger – gestion de coopératives agricoles avec blockchain",
   "type": "module",
-  "main": "dist/server.mjs",
+  "main": "dist/server.js",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
+    "dev": "nodemon",
     "build": "prisma generate && tsc -b",
-    "start": "prisma migrate deploy && node dist/server.mjs",
-    "postinstall": "prisma generate"
+    "start": "prisma migrate deploy && node dist/server.js",
+    "db:migrate": "prisma migrate deploy",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@better-auth/expo": "^1.6.9",
@@ -48,11 +53,5 @@
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
-  },
-  "engines": {
-    "node": ">=20.0.0"
-  },
-  "keywords": ["cooperative", "blockchain", "express", "api", "agriculture"],
-  "author": "Equipe TG-28",
-  "license": "MIT"
+  }
 }

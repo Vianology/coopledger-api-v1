@@ -1,13 +1,13 @@
-import IORedis from "ioredis";
-import { env } from "@/config/env";
+import Redis from "ioredis";
+import { env } from "@/config/env.js";
 
-const redis = new IORedis(env.REDIS_URL, {
+export const redis = new Redis(env.REDIS_URL, {
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
 });
 
 export async function setOTP(phone: string, code: string): Promise<void> {
-  await redis.set(`otp:${phone}`, code, "EX", 300); // 5 minutes
+  await redis.set(`otp:${phone}`, code, "EX", 300);
 }
 
 export async function getOTP(phone: string): Promise<string | null> {
@@ -17,5 +17,3 @@ export async function getOTP(phone: string): Promise<string | null> {
 export async function deleteOTP(phone: string): Promise<void> {
   await redis.del(`otp:${phone}`);
 }
-
-export { redis };

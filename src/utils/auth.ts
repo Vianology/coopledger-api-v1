@@ -2,8 +2,8 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { expo } from "@better-auth/expo";
 import { dash } from "@better-auth/infra";
-import { env } from "@/config/env";
-import { prisma } from "./prisma";
+import { env } from "@/config/env.js";
+import { prisma } from "./prisma.js";
 
 export const auth = betterAuth({
   appName: "CoopLedger",

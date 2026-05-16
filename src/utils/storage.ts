@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { PinataSDK } from "pinata";
-import { env } from "@/config/env";
+import { env } from "@/config/env.js";
 
 cloudinary.config({
   cloud_name: env.CLOUDINARY_CLOUD_NAME,
@@ -9,8 +9,5 @@ cloudinary.config({
   secure: true,
 });
 
-export const pinata = new PinataSDK({
-  pinataJwt: env.PINATA_JWT,
-});
-
+export const pinata = new PinataSDK({ pinataJwt: env.PINATA_JWT });
 export { cloudinary };

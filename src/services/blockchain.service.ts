@@ -1,10 +1,9 @@
 import { ethers } from "ethers";
-import { env } from "@/config/env";
-import contractAbi from "./contractAbi.json"; // l'ABI complet (tableau d'objets)
+import { env } from "@/config/env.js";
+import contractAbi from "./contractAbi.json" assert { type: "json" };
 
 const provider = new ethers.JsonRpcProvider(env.POLYGON_RPC_URL);
 const systemWallet = new ethers.Wallet(env.SYSTEM_PRIVATE_KEY, provider);
-
 const contract = new ethers.Contract(env.CONTRACT_ADDRESS, contractAbi, systemWallet);
 
 export enum ProofType {

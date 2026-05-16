@@ -1,10 +1,9 @@
-import { env } from "@/config/env";
+import { env } from "@/config/env.js";
 
 export async function sendWhatsAppOTP(to: string, code: string): Promise<Response> {
   const url = new URL("/send/message", env.GOWA_API_URL);
   const auth = Buffer.from(env.GOWA_API_BASIC_AUTH).toString("base64");
-
-  return await fetch(url, {
+  return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

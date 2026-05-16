@@ -1,8 +1,8 @@
-import { env } from "@/config/env";
+import { env } from "@/config/env.js";
 import { TransactionStatus, TransactionType } from "@prisma/client";
 import type { Request, Response } from "express";
 import { Transaction } from "fedapay";
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/utils/prisma.js";
 
 export async function initiatePayment(req: Request, res: Response) {
   const { amount, type, cooperativeId, voteId, description } = req.body;
