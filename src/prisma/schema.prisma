@@ -24,7 +24,10 @@ model User {
   voteCasts          VoteCast[]
   createdCooperatives Cooperative[] @relation("Creator")
   proposedVotes      Vote[]         @relation("Proposer")
+  accounts           Account[]
+  sessions           Session[]
 }
+
 
 model Cooperative {
   id          String   @id @default(cuid())
